@@ -11,70 +11,88 @@ namespace Practical_Assignment
 {
 
 
-    public partial class Login
+    public partial class PasswordChange
     {
 
         /// <summary>
-        /// loginMsg control.
+        /// lbl_errorMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label loginMsg;
+        protected global::System.Web.UI.WebControls.Label lbl_errorMsg;
 
         /// <summary>
-        /// lbl_fName control.
+        /// lbl_oldPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_fName;
+        protected global::System.Web.UI.WebControls.Label lbl_oldPass;
 
         /// <summary>
-        /// tb_emailLogin control.
+        /// tb_oldPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_emailLogin;
+        protected global::System.Web.UI.WebControls.TextBox tb_oldPass;
 
         /// <summary>
-        /// lbl_password control.
+        /// lbl_newPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_password;
+        protected global::System.Web.UI.WebControls.Label lbl_newPass;
 
         /// <summary>
-        /// tb_passwordLogin control.
+        /// tb_newPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tb_passwordLogin;
+        protected global::System.Web.UI.WebControls.TextBox tb_newPass;
 
         /// <summary>
-        /// errorMsg control.
+        /// lbl_passMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label errorMsg;
+        protected global::System.Web.UI.WebControls.Label lbl_passMsg;
 
         /// <summary>
-        /// btn_login control.
+        /// lbl_newPassCfm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_login;
+        protected global::System.Web.UI.WebControls.Label lbl_newPassCfm;
+
+        /// <summary>
+        /// tb_newPassCfm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb_newPassCfm;
+
+        /// <summary>
+        /// btn_changePass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_changePass;
     }
 }

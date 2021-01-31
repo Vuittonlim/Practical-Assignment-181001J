@@ -7,12 +7,12 @@ using System.Web.UI.WebControls;
 
 namespace Practical_Assignment.Error_Pages
 {
-    public partial class errorPage_404 : System.Web.UI.Page
+    public partial class errorPage_403 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-        }
 
+        }
         protected void backBtn_Click(object sender, EventArgs e)
         {
             Session.Clear();
@@ -31,5 +31,6 @@ namespace Practical_Assignment.Error_Pages
             }
             Response.Redirect("../Default.aspx", true);
         }
+
     }
 }

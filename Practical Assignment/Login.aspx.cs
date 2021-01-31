@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
@@ -26,7 +27,32 @@ namespace Practical_Assignment
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Page.IsPostBack == false)
+            {
+                try
+                {
+                    using (SqlConnection con = new SqlConnection(MyDBConnectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("UPDATE Account SET AccStatus = @NewAccStatus where AccStatus = @OldAccStatus"))
+                        {
+                            using (SqlDataAdapter sda = new SqlDataAdapter())
+                            {
+                                cmd.CommandType = CommandType.Text;
+                                cmd.Parameters.AddWithValue("@NewAccStatus", "A");
+                                cmd.Parameters.AddWithValue("@OldAccStatus", "L");
+                                cmd.Connection = con;
+                                con.Open();
+                                cmd.ExecuteNonQuery();
+                                con.Close();
+                            }
+                        }
+                    }
+                }
+                catch
+                {
 
+                }
+            }
         }
 
         public bool ValidateCaptcha()
@@ -99,10 +125,13 @@ namespace Practical_Assignment
             SqlConnection con = new SqlConnection(MyDBConnectionString);
             loginMsg.Visible = true;
             loginMsg.Text = "Account lockout. Please try again later.";
-            SqlCommand lockAccCmd = new SqlCommand("UPDATE Account SET AccStatus = @paraAccStatus where Email = @paraEmail");
+            string currentTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            DateTime LockedTime = DateTime.ParseExact(currentTime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+            SqlCommand lockAccCmd = new SqlCommand("UPDATE Account SET AccStatus = @paraAccStatus, LockedTime = @paraLockedTime where Email = @paraEmail");
             lockAccCmd.CommandType = CommandType.Text;
             lockAccCmd.Parameters.AddWithValue("paraAccStatus", "L");
             lockAccCmd.Parameters.AddWithValue("@paraEmail", email);
+            lockAccCmd.Parameters.AddWithValue("@paraLockedTime", LockedTime);
             lockAccCmd.Connection = con;
             con.Open();
             lockAccCmd.ExecuteNonQuery();
@@ -150,12 +179,39 @@ namespace Practical_Assignment
                             {
                                 if (userHash.Equals(dbHash)) // if pass match
                                 {
-                                    Session["LoggedIn"] = tb_emailLogin.Text.ToString().Trim();
-                                    string guid = Guid.NewGuid().ToString();
-                                    Session["AuthToken"] = guid;
+                                    string passCheck = checkPassAge(email);
+                                    System.Diagnostics.Debug.WriteLine(passCheck);
+                                    if (passCheck == "All good")
+                                    {
+                                        Session["LoggedIn"] = tb_emailLogin.Text.ToString().Trim();
+                                        string guid = Guid.NewGuid().ToString();
+                                        Session["AuthToken"] = guid;
+                                        Session["Expired"] = "Not expired";
 
-                                    Response.Cookies.Add(new HttpCookie("AuthToken", guid));
-                                    Response.Redirect("LoginSuccess233.aspx?=" + HttpUtility.UrlEncode(HttpUtility.HtmlEncode(tb_emailLogin.Text)), false);
+                                        Response.Cookies.Add(new HttpCookie("AuthToken", guid));
+                                        Response.Redirect("LoginSuccess.aspx?=" + HttpUtility.UrlEncode(HttpUtility.HtmlEncode(tb_emailLogin.Text)), false);
+                                    }
+                                    else if (passCheck == "Max")
+                                    {
+                                        Session["LoggedIn"] = tb_emailLogin.Text.ToString().Trim();
+                                        string guid = Guid.NewGuid().ToString();
+                                        Session["AuthToken"] = guid;
+                                        Session["Expired"] = "Expired";
+
+                                        Response.Cookies.Add(new HttpCookie("AuthToken", guid));
+                                        Response.Redirect("PasswordChange.aspx", false);
+                                    }
+                                    else if (passCheck == "Min")
+                                    {
+                                        Session["LoggedIn"] = tb_emailLogin.Text.ToString().Trim();
+                                        string guid = Guid.NewGuid().ToString();
+                                        Session["AuthToken"] = guid;
+                                        Session["Expired"] = "Can't change yet";
+
+                                        Response.Cookies.Add(new HttpCookie("AuthToken", guid));
+                                        Response.Redirect("LoginSuccess.aspx?=" + HttpUtility.UrlEncode(HttpUtility.HtmlEncode(tb_emailLogin.Text)), false);
+                                    }
+
                                 }
                                 else if (!userHash.Equals(dbHash)) // if pass don't match
                                 {
@@ -169,6 +225,7 @@ namespace Practical_Assignment
                                     else if (loginCount >= 3)
                                     {
                                         lockAcc(tb_emailLogin.Text.Trim());
+                                        loginCount = 0;
                                     }
                                 }
 
@@ -191,10 +248,68 @@ namespace Practical_Assignment
                     throw new Exception(ex.ToString());
                 }
             }
-            
+
         }
 
+        protected string checkPassAge(string suppliedEmail)
+        {
 
+            SqlConnection con = new SqlConnection(MyDBConnectionString);
+            string sql = "SELECT PasswordUsedTime FROM Account WHERE Email = @paraEmail";
+            SqlCommand command = new SqlCommand(sql, con);
+            command.Parameters.AddWithValue("@paraEmail", suppliedEmail);
+            string result = null;
+
+            try
+            {
+                con.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (reader["PasswordUsedTime"] != null)
+                        {
+                            if (reader["PasswordUsedTime"] != DBNull.Value)
+                            {
+                                //string time = reader["PasswordUsedTime"].ToString();
+                                //System.Diagnostics.Debug.WriteLine(time);
+                                //DateTime passwordTime = DateTime.ParseExact(time, "dd/MM/yyyy HH:mm tt", CultureInfo.InvariantCulture);
+                                //DateTime currentTime = DateTime.ParseExact(DateTime.Now.ToString(), "dd/MM/yyyy HH:mm tt", CultureInfo.InvariantCulture);
+                                //int duration = currentTime.Minute - passwordTime.Minute;              string time = reader["PasswordUsedTime"].ToString();
+                                string time = reader["PasswordUsedTime"].ToString();
+                                DateTime passwordTime = Convert.ToDateTime(reader["PasswordUsedTime"]);
+                                DateTime currentTime = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy HH:mm tt"), "dd/MM/yyyy HH:mm tt", CultureInfo.InvariantCulture);
+                                //int duration = currentTime.Minute - passwordTime.Minute;
+                                TimeSpan difference = currentTime.Subtract(passwordTime);
+                                double duration = difference.TotalMinutes;
+                                if (duration >= 15)
+                                {
+                                    result = "Max";
+                                }
+                                else if (duration < 5)
+                                {
+                                    result = "Min";
+                                }
+                                else
+                                {
+                                    result = "All good";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
 
         protected string getDBHash(string suppliedEmail)
         {

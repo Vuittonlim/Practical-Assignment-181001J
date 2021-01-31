@@ -11,6 +11,21 @@ namespace Practical_Assignment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["loggedIn"] != null && Session["AuthToken"] != null && Request.Cookies["AuthToken"] != null)
+            {
+                loginBtnHome.Visible = false;
+                btn_changePass.Visible = true;
+            }
+            else
+            {
+                loginBtnHome.Visible = true;
+                btn_changePass.Visible = false;
+            }
+        }
+
+        protected void btn_changePass_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("PasswordChange.aspx", false);
 
         }
     }

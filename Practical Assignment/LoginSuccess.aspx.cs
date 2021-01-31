@@ -11,26 +11,28 @@ namespace Practical_Assignment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["LoggedIn"] != null && Session["AuthToken"] != null && Request.Cookies["AuthToken!"] != null)
+            if (Session["LoggedIn"] != null && Session["AuthToken"] != null && Request.Cookies["AuthToken"] != null)
             {
                 if (!Session["AuthToken"].ToString().Equals(Request.Cookies["AuthToken"].Value))
                 {
                     Response.Redirect("Login.aspx", false);
                 }
-                else
-                {
-                    
-                }
+            }
+            else
+            {
+                Response.Redirect("Login.aspx", false);
+
             }
         }
 
         protected void btn_logout_Click(object sender, EventArgs e)
         {
+
             Session.Clear();
             Session.Abandon();
             Session.RemoveAll();
 
-            Response.Redirect("Login.aspx", false);
+            Response.Redirect("Default.aspx", false);
 
             if (Request.Cookies["ASP.NET_SessionId"] != null)
             {
@@ -40,9 +42,14 @@ namespace Practical_Assignment
 
             if (Request.Cookies["AuthToken"] != null)
             {
-                Request.Cookies["AuthToken"].Value = string.Empty;
-                Request.Cookies["AuthToken"].Expires = DateTime.Now.AddMonths(-20);
+                Response.Cookies["AuthToken"].Value = string.Empty;
+                Response.Cookies["AuthToken"].Expires = DateTime.Now.AddMonths(-20);
             }
+        }
+
+        protected void backBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("PasswordChange.aspx", false);
         }
     }
 }

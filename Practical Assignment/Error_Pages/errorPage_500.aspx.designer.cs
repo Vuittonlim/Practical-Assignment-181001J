@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Practical_Assignment
+namespace Practical_Assignment.Error_Pages
 {
 
 
-    public partial class LoginSuccess
+    public partial class errorPage_500
     {
 
         /// <summary>
@@ -22,14 +22,5 @@ namespace Practical_Assignment
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button backBtn;
-
-        /// <summary>
-        /// btn_logout control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_logout;
     }
 }

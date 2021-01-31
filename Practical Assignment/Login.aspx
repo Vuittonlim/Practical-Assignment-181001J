@@ -1,10 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Practical_Assignment.Login" ValidateRequest="false" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
+﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Practical_Assignment.Login" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <style type="text/css">
 
         .auto-style38 {
@@ -134,10 +129,6 @@
             });
         });
     </script>
-
-</head>
-<body>
-    <form id="loginForm" runat="server">
         <table class="auto-style38" style="margin-right: auto; margin-left: auto;">
             <tr>
                 <td class="auto-style14">&nbsp;</td>
@@ -154,9 +145,9 @@
                 <td class="auto-style9"></td>
             </tr>
             <tr>
-                <td class="auto-style16" style="text-align: left; font-weight: bold;">Login</td>
+                <td class="auto-style16" style="text-align: left; font-weight: bold; font-size: x-large;">Login</td>
                 <td class="auto-style3" style="text-align: center; ">
-                    <asp:Label ID="loginMsg" runat="server"></asp:Label>
+                    <asp:Label ID="loginMsg" runat="server" Font-Size="18px"></asp:Label>
                 </td>
                 <td style="text-align: center; font-weight: bold;" class="auto-style22">&nbsp;</td>
                 <td class="auto-style27"></td>
@@ -171,7 +162,7 @@
             </tr>
             <tr>
                 <td class="auto-style17">
-                    <asp:Label ID="lbl_fName" runat="server" Text="Email:"></asp:Label>
+                    <asp:Label ID="lbl_fName" runat="server" Text="Email:" Font-Size="18px"></asp:Label>
                 </td>
                 <td class="auto-style4">
                     <asp:TextBox ID="tb_emailLogin" runat="server" TextMode="Email" Width="323px"></asp:TextBox>
@@ -193,11 +184,11 @@
 
             <tr>
                 <td class="auto-style17">
-                    <asp:Label ID="lbl_password" runat="server" Text="Password: "></asp:Label>
+                    <asp:Label ID="lbl_password" runat="server" Text="Password: " Font-Size="18px"></asp:Label>
                 </td>
                 <td class="auto-style4">
                     <asp:TextBox ID="tb_passwordLogin" runat="server" Width="323px" TextMode="Password"></asp:TextBox>
-                    <asp:Label ID="errorMsg" runat="server"></asp:Label>
+                    <asp:Label ID="errorMsg" runat="server" Font-Size="16px"></asp:Label>
                 </td>
                 <td class="auto-style29">&nbsp;</td>
                 <td class="auto-style36">
@@ -229,7 +220,7 @@
             <tr>
                 <td class="auto-style19"></td>
                 <td class="auto-style6">
-                    <asp:Button ID="btn_login" runat="server" Text="Login" OnClick="btn_login_Click"/>
+                    <asp:Button ID="btn_login" runat="server" Text="Login" OnClick="btn_login_Click" Font-Size="18px"/>
                 </td>
                 <td class="auto-style25"></td>
                 <td class="auto-style33"></td>
@@ -287,6 +278,4 @@
 
         </table>
 
-    </form>
-</body>
-</html>
+</asp:Content>
