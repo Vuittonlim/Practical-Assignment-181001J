@@ -180,7 +180,6 @@ namespace Practical_Assignment
                                 if (userHash.Equals(dbHash)) // if pass match
                                 {
                                     string passCheck = checkPassAge(email);
-                                    System.Diagnostics.Debug.WriteLine(passCheck);
                                     if (passCheck == "All good")
                                     {
                                         Session["LoggedIn"] = tb_emailLogin.Text.ToString().Trim();
@@ -272,11 +271,7 @@ namespace Practical_Assignment
                         {
                             if (reader["PasswordUsedTime"] != DBNull.Value)
                             {
-                                //string time = reader["PasswordUsedTime"].ToString();
-                                //System.Diagnostics.Debug.WriteLine(time);
-                                //DateTime passwordTime = DateTime.ParseExact(time, "dd/MM/yyyy HH:mm tt", CultureInfo.InvariantCulture);
-                                //DateTime currentTime = DateTime.ParseExact(DateTime.Now.ToString(), "dd/MM/yyyy HH:mm tt", CultureInfo.InvariantCulture);
-                                //int duration = currentTime.Minute - passwordTime.Minute;              string time = reader["PasswordUsedTime"].ToString();
+
                                 string time = reader["PasswordUsedTime"].ToString();
                                 DateTime passwordTime = Convert.ToDateTime(reader["PasswordUsedTime"]);
                                 DateTime currentTime = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy HH:mm tt"), "dd/MM/yyyy HH:mm tt", CultureInfo.InvariantCulture);

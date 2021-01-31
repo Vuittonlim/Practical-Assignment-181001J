@@ -267,14 +267,11 @@ namespace Practical_Assignment
                             {
                                 if (reader["OldPassHash"].ToString() != newFinalHash)  // if current doesnt matches the older hash hist
                                 {
-                                    h = reader["OldPassHash"].ToString();
-                                    System.Diagnostics.Debug.WriteLine("Doesn't match, shouldnt be null, what i want when setting a prev used pass");   // should match if want to do pass history
-                                    //System.Diagnostics.Debug.WriteLine("NEW", finalHash);   // should match if want to do pass history
-                                    System.Diagnostics.Debug.WriteLine("OLDER", reader["OldPassHash"].ToString());
+                                    h = reader["OldPassHash"].ToString(); 
                                 }
                                 else
                                 {
-                                    System.Diagnostics.Debug.WriteLine("Match, shouldnt allow, should be null");   // should match if want to do pass history
+                                    System.Diagnostics.Debug.WriteLine("Current matches the older hash");   // should match if want to do pass history
                                 }
                             }
                         }
@@ -346,7 +343,6 @@ namespace Practical_Assignment
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
-                            System.Diagnostics.Debug.WriteLine(currentTime);
                             cmd.CommandType = CommandType.Text;
                             cmd.Parameters.AddWithValue("@paraPasswordHash", finalHash);
                             cmd.Parameters.AddWithValue("@paraPasswordSalt", salt);
@@ -379,8 +375,7 @@ namespace Practical_Assignment
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.CommandType = CommandType.Text;
-                            //System.Diagnostics.Debug.WriteLine("HASH THAT IS ABOUT TO BE PUT INTO OLD HASH", oldHash);
-                            //System.Diagnostics.Debug.WriteLine("SHOULD MATCH WITH THE DBHASH");
+ 
                             cmd.Parameters.AddWithValue("@OldParaPasswordHash", oldHash);
                             cmd.Parameters.AddWithValue("@OldParaPasswordSalt", salt);
                             cmd.Parameters.AddWithValue("@paraEmail", userEmail);
@@ -522,19 +517,14 @@ namespace Practical_Assignment
 
                                     string dbHashHist = checkPassHashHist(email, newfinalHash); // check if new hash matches older hash
                                     //string dbSaltHist = checkPassSaltHist(email, dbSalt);
-                                    System.Diagnostics.Debug.WriteLine("old hash",dbHashHist);
-                                    //System.Diagnostics.Debug.WriteLine("old salt", dbSaltHist);
 
                                     //if (dbHashHist != null && dbSaltHist != null)       // if new password hash and salt is all good
                                     if (dbHashHist != null)       // if new password hash and salt is all good
                                     {
-                                        System.Diagnostics.Debug.WriteLine("NEW PASSWORD hash", newfinalHash);
                                         registerNewPass(email, dbHash, dbSalt, newfinalHash, dbSalt, currentTime);
                                     }
                                     else 
                                     {
-                                        System.Diagnostics.Debug.WriteLine("ALL THE HASH AND SALT IS NULL, PASSWORD USED BEFORE");   // should match if want to do pass history
-                                        System.Diagnostics.Debug.WriteLine(newfinalHash);   // should match if want to do pass history
                                         lbl_errorMsg.Visible = true;
                                         lbl_errorMsg.Text = "New Password should not be used recently.";
                                         lbl_errorMsg.ForeColor = Color.Red;

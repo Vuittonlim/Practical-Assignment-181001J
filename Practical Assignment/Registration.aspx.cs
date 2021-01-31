@@ -80,7 +80,6 @@ namespace Practical_Assignment
                 lbl_errorMsg.ForeColor = Color.Red;
                 lbl_errorMsg.Text = "Name not valid.";
                 score += 1;
-                System.Diagnostics.Debug.WriteLine("name", score);
                 return score;
             }
 
@@ -92,14 +91,6 @@ namespace Practical_Assignment
                 return score;
 
             }
-            //if (!Regex.IsMatch(DateOfBirth, @"^(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/(\d{2})$"))
-            //{
-            //    lbl_errorMsg.ForeColor = Color.Red;
-            //    lbl_errorMsg.Text = "Date of birth not valid.";
-            //    score += 1;
-            //    return score;
-
-            //}
 
             DateTime dob = DateTime.ParseExact(tb_dob.Text.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
             var currentDate = DateTime.Today;
@@ -125,14 +116,8 @@ namespace Practical_Assignment
 
         protected bool validateCreditCard(string card)
         {
-            //if(card[0] == 5 || card[0] == 4 || card[0] == 3)
-            //{
-            //    return true;
-            //}
-            //return false; 
             try
             {
-                System.Diagnostics.Debug.WriteLine(card[0]);
                 if (card[0].ToString() == "5" || card[0].ToString() == "4" || card[0].ToString() == "3")
                 {
                     return true;
@@ -310,7 +295,6 @@ namespace Practical_Assignment
                 cipher.IV = IV;
                 cipher.Key = Key;
                 ICryptoTransform encryptTransform = cipher.CreateEncryptor();
-                //ICryptoTransform decryptTransform = cipher.CreateDecryptor();
                 byte[] plainText = Encoding.UTF8.GetBytes(data);
                 cipherText = encryptTransform.TransformFinalBlock(plainText, 0, plainText.Length);
             }
