@@ -37,8 +37,12 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
-
-        <div class="navbar navbar-fixed-top" style="background: #2C3E50; color: white;">
+        <style>
+            .nav:hover{
+                color: #C70039;
+            }
+        </style>
+        <div class="navbar navbar-fixed-top" style="background: #F5D56C; color: white;">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

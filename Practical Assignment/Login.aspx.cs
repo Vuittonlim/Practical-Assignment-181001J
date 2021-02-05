@@ -160,6 +160,7 @@ namespace Practical_Assignment
                     if (userCount > 0)  // if user exists
                     {
                         string pwd = tb_passwordLogin.Text.ToString().Trim();
+                        System.Diagnostics.Debug.WriteLine(pwd);
                         string email = tb_emailLogin.Text.ToString().Trim();
                         SHA512Managed hashing = new SHA512Managed();
                         RijndaelManaged cipher = new RijndaelManaged();

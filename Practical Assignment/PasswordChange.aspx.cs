@@ -175,6 +175,7 @@ namespace Practical_Assignment
 
         protected int checkPassword(string Password)
         {
+            string symbols = @"[!@#$%^&*()_+=\[{\]};:<>|./?,-]";
             int regexScore = 0;
             // Score 0 is vey weak
             // if length of password is less than 8 chars
@@ -203,7 +204,7 @@ namespace Practical_Assignment
                 regexScore++;
             }
 
-            if (Regex.IsMatch(Password, "[^a-zA-Z0-9_.]"))
+            if (Regex.IsMatch(Password, symbols))
             {
                 regexScore++;
             }

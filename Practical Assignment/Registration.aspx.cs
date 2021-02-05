@@ -27,6 +27,7 @@ namespace Practical_Assignment
         }
         private int checkPassword(string Password)
         {
+            string symbols = @"[!@#$%^&*()_+=\[{\]};:<>|./?,-]";
             int score = 0;
             // Score 0 is vey weak
             // if length of password is less than 8 chars
@@ -55,7 +56,7 @@ namespace Practical_Assignment
                 score++;
             }
 
-            if (Regex.IsMatch(Password, "[^a-zA-Z0-9_.]"))
+            if (Regex.IsMatch(Password, symbols))
             {
                 score++;
             }
@@ -170,8 +171,8 @@ namespace Practical_Assignment
                 default:
                     break;
             }
-            lbl_pwdChecker.Text = "Status: " + status;
-            if (scores < 4)
+            lbl_pwdChecker.Text = "Status: " + status + "<br/>Passwords will only be accepted if it has one uppercase, lowercase, number and symbol. Length of password has to be more than eight characters.";
+            if (scores < 5)
             {
                 lbl_pwdChecker.ForeColor = Color.Red;
                 return;
